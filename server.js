@@ -45,9 +45,10 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-const PORT = process.env.PORT || 8080;
+//const PORT = process.env.PORT || 8080;
+app.set('port', (process.env.PORT || 8080));
 console.log("starting server...");
-app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
+app.listen(app.get('port'), () => console.log(`Server started on port: ${process.env.PORT}`));
 
 //set up mongoose
 console.log("connnecting Mongo DB...");
