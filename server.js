@@ -36,6 +36,9 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
+//Connect nodejs to React app
+app.use(express.static(path.join(__dirname, "build")));
+
 // Import Routes
 // const authRoute = require("./routers/index");
 
