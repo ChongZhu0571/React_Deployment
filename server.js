@@ -41,19 +41,13 @@ app.use("/api/users", userRoutes);
 app.use("/api/carts", cartRoutes);
 // global error handler
 app.use(errorHandler);
-<<<<<<< HEAD
 app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-//const PORT = process.env.PORT || 8080;
-app.set('port', (process.env.PORT || 8080));
-=======
-
 const PORT = process.env.PORT || 8080;
->>>>>>> parent of 7e90fa5 (update)
 console.log("starting server...");
-app.listen(app.get('port'), () => console.log(`Server started on port: ${process.env.PORT}`));
+app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 
 //set up mongoose
 console.log("connnecting Mongo DB...");
