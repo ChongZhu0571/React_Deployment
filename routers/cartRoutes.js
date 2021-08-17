@@ -23,10 +23,11 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/myCart", authenticateToken, async (req, res, next) => {
+router.get("/myCart/:id", async (req, res, next) => {
   try {
-    const result = await Cart.find({ user: new ObjectId(req.user.sub) });
-    console.log(req.params);
+    const result = await Cart.find({
+      user: mongoose.Types.ObjectId(req.params.id),
+    });
     if (!result) {
       return res.status(404).send("No cart with provided user id");
     }
@@ -62,16 +63,17 @@ router.delete("/myCart", authenticateToken, async (req, res, next) => {
 });
 
 //update
-router.patch("/myCart", authenticateToken, async (req, res, next) => {
+router.post("/myCart", async (req, res, next) => {
   try {
     const result = await Cart.updateOne(
-      { user: new ObjectId(req.user.sub) },
+      { user: mongoose.Types.ObjectId(req.body.user) },
       {
-        user: req.user.sub,
-        ...req.body,
+        user: req.body.user,
+        product: req.body.product,
       }
     );
-    res.json(result);
+    console.log(result);
+    res.json(req.body);
   } catch (err) {
     next(err);
   }
