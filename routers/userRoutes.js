@@ -67,21 +67,19 @@ router.post("/register", async (req, res, next) => {
 });
 
 //reset info
-router.post("/reset", authenticateToken, async (req, res, next) => {
+router.put("/reset", authenticateToken, async (req, res, next) => {
   try {
     let { name, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
     // find the element
     let result = await User.findOneAndUpdate(
-      { _id: mongoose.Types.ObjectId(req.user.sub) },
-      { name, email, password: hashedPassword }
+      { _id: new ObjectId(req.user.sub) },
+      { name, email, password }
     );
     if (!result) {
       return res.status(401).send("Wrong id");
     }
     res.send(result);
   } catch (err) {
-    console.log(err);
     next(err);
   }
 });
